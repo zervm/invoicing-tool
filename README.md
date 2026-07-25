@@ -55,14 +55,27 @@ Then open http://localhost:8081/ (default credentials: `admin` /
 Workflow: add a client, create an invoice for them with one or more line
 items, then open the invoice to view/print it or mark it sent/paid.
 
+## Live demo
+
+This app has no public side — every route needs login. To try it:
+
+- URL: `<live demo URL>`
+- Username: `demo`
+- Password: `demo1234`
+
+(Deliberately public, low-stakes credentials — this is a portfolio demo
+with no real client data behind it.)
+
 ## Deploying (Render)
 
 1. Push this repo to GitHub.
 2. On Render: New → Web Service → connect the repo.
 3. Build command: `go build -o app ./cmd/server`
 4. Start command: `./app`
-5. Environment variables: `DB_PATH=data.db`, `ADMIN_USER`, `ADMIN_PASSWORD`
-   (Render sets `PORT` automatically — the app already reads it).
+5. Environment variables: `DB_PATH=data.db`, `ADMIN_USER=demo`,
+   `ADMIN_PASSWORD=demo1234` (or your own — just keep the README's Live
+   demo section in sync). Render sets `PORT` automatically — the app
+   already reads it.
 
 Note: Render's free tier disk is ephemeral on redeploy, so `data.db`
 resets then — fine for a portfolio demo, not for real production data
