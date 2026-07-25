@@ -1,0 +1,95 @@
+:root {
+  --accent: #2f4d5d;
+  --accent-light: #e7edf0;
+  --text: #1f2422;
+  --text-muted: #6b7570;
+  --border: #dfe4e2;
+  --error: #b3261e;
+  --success: #2f5d50;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #f7f8f7;
+  color: var(--text);
+  margin: 0;
+  padding: 2rem 1rem;
+}
+
+.wrap { max-width: 720px; margin: 0 auto; }
+
+.card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+h1 { font-size: 1.4rem; margin: 0 0 0.25rem; }
+h2 { font-size: 1.1rem; margin: 0 0 0.75rem; }
+.subtitle { color: var(--text-muted); margin: 0 0 1.25rem; font-size: 0.9rem; }
+
+label { display: block; font-size: 0.85rem; font-weight: 600; margin: 0.75rem 0 0.3rem; }
+
+select, input, textarea {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.primary-btn { background: var(--accent); color: #fff; padding: 0.6rem 1rem; margin-top: 1rem; }
+.secondary-btn { background: var(--accent-light); color: var(--accent); padding: 0.4rem 0.8rem; font-size: 0.8rem; }
+.danger-btn { background: #fbeceb; color: var(--error); padding: 0.4rem 0.7rem; font-size: 0.8rem; }
+
+.message { margin-top: 1rem; font-size: 0.85rem; padding: 0.55rem 0.75rem; border-radius: 8px; }
+.message.success { background: var(--accent-light); color: var(--success); }
+.message.error { background: #fbeceb; color: var(--error); }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+th, td { text-align: left; padding: 0.5rem 0.5rem; border-bottom: 1px solid var(--border); white-space: nowrap; }
+
+.line-item-row { display: flex; gap: 0.5rem; align-items: flex-end; margin-bottom: 0.5rem; }
+.line-item-row .desc { flex: 3; }
+.line-item-row .qty, .line-item-row .price { flex: 1; }
+
+.status-tag {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.status-draft { background: #eee; color: #555; }
+.status-sent { background: #fff3d6; color: #8a6100; }
+.status-paid { background: var(--accent-light); color: var(--success); }
+
+.top-right { text-align: right; margin-bottom: 1rem; }
+.top-right a { color: var(--text-muted); font-size: 0.85rem; text-decoration: none; }
+
+/* Invoice print view */
+#invoice-detail .invoice-header { display: flex; justify-content: space-between; margin-bottom: 1.5rem; }
+#invoice-detail .totals { margin-top: 1rem; text-align: right; }
+#invoice-detail .totals div { margin: 0.2rem 0; }
+#invoice-detail .grand-total { font-size: 1.2rem; font-weight: 700; margin-top: 0.4rem; }
+
+@media print {
+  body { padding: 0; background: #fff; }
+  .no-print { display: none !important; }
+  .card { border: none; padding: 0; }
+}

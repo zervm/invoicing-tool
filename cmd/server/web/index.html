@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invoicing Tool</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- LOGIN -->
+    <section id="login-section" class="card">
+      <h1>Invoicing Tool</h1>
+      <p class="subtitle">Sign in to manage clients and invoices.</p>
+      <form id="login-form">
+        <label for="admin-user">Username</label>
+        <input type="text" id="admin-user" required>
+        <label for="admin-pass">Password</label>
+        <input type="password" id="admin-pass" required>
+        <button type="submit" class="primary-btn">Sign in</button>
+        <div id="login-error" class="message error" hidden></div>
+      </form>
+    </section>
+
+    <!-- MAIN APP -->
+    <div id="app-section" hidden>
+
+      <!-- CLIENTS -->
+      <section class="card no-print">
+        <h2>Clients</h2>
+        <div class="table-wrap">
+          <table id="clients-table">
+            <thead><tr><th>Name</th><th>Email</th><th>Address</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <form id="client-form">
+          <label for="client-name">Name</label>
+          <input type="text" id="client-name" required>
+          <label for="client-email">Email</label>
+          <input type="email" id="client-email">
+          <label for="client-address">Address</label>
+          <input type="text" id="client-address">
+          <button type="submit" class="primary-btn">Add client</button>
+        </form>
+        <div id="client-message" class="message" hidden></div>
+      </section>
+
+      <!-- INVOICES LIST -->
+      <section class="card no-print">
+        <h2>Invoices</h2>
+        <div class="table-wrap">
+          <table id="invoices-table">
+            <thead>
+              <tr><th>Number</th><th>Client</th><th>Due</th><th>Total</th><th>Status</th><th></th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- NEW INVOICE -->
+      <section class="card no-print">
+        <h2>New invoice</h2>
+        <form id="invoice-form">
+          <label for="invoice-client">Client</label>
+          <select id="invoice-client" required></select>
+
+          <label for="invoice-issue-date">Issue date</label>
+          <input type="date" id="invoice-issue-date" required>
+
+          <label for="invoice-due-date">Due date</label>
+          <input type="date" id="invoice-due-date" required>
+
+          <label>Line items</label>
+          <div id="line-items"></div>
+          <button type="button" class="secondary-btn" id="add-line-item">+ Add line item</button>
+
+          <label for="invoice-tax">Tax rate (%)</label>
+          <input type="number" id="invoice-tax" value="0" min="0" step="0.1">
+
+          <label for="invoice-notes">Notes (optional)</label>
+          <textarea id="invoice-notes" rows="2"></textarea>
+
+          <button type="submit" class="primary-btn">Create invoice</button>
+        </form>
+        <div id="invoice-message" class="message" hidden></div>
+      </section>
+
+    </div>
+
+    <!-- SINGLE INVOICE / PRINT VIEW -->
+    <section id="invoice-detail" class="card" hidden>
+      <div class="top-right no-print">
+        <a href="#" id="back-to-list">&larr; Back to list</a>
+      </div>
+      <div class="invoice-header">
+        <div>
+          <h1 id="inv-number"></h1>
+          <div id="inv-status-tag"></div>
+        </div>
+        <div style="text-align:right">
+          <div><strong>Issue date:</strong> <span id="inv-issue-date"></span></div>
+          <div><strong>Due date:</strong> <span id="inv-due-date"></span></div>
+        </div>
+      </div>
+
+      <div>
+        <strong>Bill to:</strong>
+        <div id="inv-client-name"></div>
+        <div id="inv-client-email"></div>
+        <div id="inv-client-address"></div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:1rem">
+        <table>
+          <thead><tr><th>Description</th><th>Qty</th><th>Unit price</th><th>Total</th></tr></thead>
+          <tbody id="inv-line-items"></tbody>
+        </table>
+      </div>
+
+      <div class="totals">
+        <div>Subtotal: <span id="inv-subtotal"></span></div>
+        <div>Tax: <span id="inv-tax"></span></div>
+        <div class="grand-total">Total: <span id="inv-total"></span></div>
+      </div>
+
+      <p id="inv-notes"></p>
+
+      <div class="no-print" style="margin-top:1rem">
+        <button type="button" class="primary-btn" id="print-btn">Print / Save as PDF</button>
+        <button type="button" class="secondary-btn" id="mark-sent-btn">Mark as sent</button>
+        <button type="button" class="secondary-btn" id="mark-paid-btn">Mark as paid</button>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
