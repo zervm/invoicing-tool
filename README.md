@@ -8,6 +8,8 @@ Built as a freelance portfolio piece, demonstrating money-math correctness
 (cents-based arithmetic, tested), auth-protected APIs, and a practical,
 dependency-free approach to "PDF export."
 
+**Live demo:** https://invoicing-tool-baum.onrender.com
+
 ## Architecture decisions
 
 - **Money is stored and calculated in cents (`int64`), never floats.**
@@ -59,7 +61,7 @@ items, then open the invoice to view/print it or mark it sent/paid.
 
 This app has no public side — every route needs login. To try it:
 
-- URL: `<live demo URL>`
+- URL: https://invoicing-tool-baum.onrender.com
 - Username: `demo`
 - Password: `demo1234`
 
