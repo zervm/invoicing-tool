@@ -15,7 +15,21 @@ import (
 var webFiles embed.FS
 
 func main() {
-	store := invoicing.NewMemoryStore()
+	// DB_PATH controls persistence: set it (e.g. to a file path) to use
+	// real SQLite storage that survives restarts. Leave it unset and the
+	// app falls back to in-memory storage.
+	var store invoicing.Store
+	if dbPath := os.Getenv("DB_PATH"); dbPath != "" {
+		sqliteStore, err := invoicing.NewSQLiteStore(dbPath)
+		if err != nil {
+			log.Fatalf("opening SQLite store at %q: %v", dbPath, err)
+		}
+		store = sqliteStore
+		log.Printf("using SQLite storage at %s", dbPath)
+	} else {
+		store = invoicing.NewMemoryStore()
+		log.Print("using in-memory storage (set DB_PATH to persist data)")
+	}
 
 	adminUser := getEnv("ADMIN_USER", "admin")
 	adminPassword := getEnv("ADMIN_PASSWORD", "changeme")

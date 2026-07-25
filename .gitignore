@@ -2,3 +2,4 @@
 /invoicing-tool
 *.exe
 *.test
+*.db

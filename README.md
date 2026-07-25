@@ -23,15 +23,30 @@ dependency-free approach to "PDF export."
   environment to fetch one, and print-to-PDF is a legitimate, widely-used
   approach for exactly this kind of tool. `style.css` has a `@media print`
   section that hides everything except the invoice itself when printing.
-- **Go standard library only, no external dependencies**, same reasoning
-  as the booking system: in-memory storage behind a `Store` interface,
-  swappable for a real database later without touching any handler code.
+- **Storage is built behind a `Store` interface**
+  (`internal/invoicing/store.go`), with two implementations: `MemoryStore`
+  for quick local runs and tests, and `SQLiteStore`
+  (`internal/invoicing/sqlite_store.go`) for real persistence. Both
+  satisfy the exact same interface, so the API layer is completely
+  unaware which one is active.
+- **Invoices and line items are modeled as two related SQL tables**
+  (`invoices` and `invoice_line_items`, joined on `invoice_id`), not
+  flattened into a JSON blob column — an invoice genuinely has a
+  one-to-many relationship with its line items, so the schema reflects
+  that.
 
 ## Running it
 
 ```
 go test ./... -v
 go run ./cmd/server
+```
+
+By default this uses in-memory storage (nothing survives a restart). To
+persist data to a real SQLite database instead:
+
+```
+DB_PATH=data.db go run ./cmd/server
 ```
 
 Then open http://localhost:8081/ (default credentials: `admin` /
@@ -46,11 +61,12 @@ items, then open the invoice to view/print it or mark it sent/paid.
 2. On Render: New → Web Service → connect the repo.
 3. Build command: `go build -o app ./cmd/server`
 4. Start command: `./app`
-5. Environment variables: `ADMIN_USER`, `ADMIN_PASSWORD`
+5. Environment variables: `DB_PATH=data.db`, `ADMIN_USER`, `ADMIN_PASSWORD`
    (Render sets `PORT` automatically — the app already reads it).
 
-Note: storage is in-memory, so data resets on every restart/redeploy —
-fine for a portfolio demo.
+Note: Render's free tier disk is ephemeral on redeploy, so `data.db`
+resets then — fine for a portfolio demo, not for real production data
+without a persistent disk add-on.
 
 ## Screenshots
 
